@@ -14,3 +14,13 @@
 - **Meditation Tracking**: Meditation has countless benefits for both the mind and body. Our meditation tracker makes it easy to keep track of your practice and see the positive impact it has on your daily life.
 
 - **Nutrition Planning**: Find the perfect healthy meal with our comprehensive nutrition search.
+
+
+## Progress:
+
+- BMI Calculator ✅️
+- Exercises Catalog ✅️
+- Exercise Category Listing ✅️
+- Nutrition Planning [in progress...]
+- Meditation Tracking [future plan...]
+
