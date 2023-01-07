@@ -24,3 +24,15 @@
 - Nutrition Planning [in progress...]
 - Meditation Tracking [future plan...]
 
+
+### Hackathon & Team Information
+
+This project is currently a submission for [HackNITR 4.0](https://hacknitr.com) round 1 hosted on devfolio.
+
+Team: `Cool Potatoes`
+
+Members:
+
+- [Prince Raj](https://devfolio.co/@Prince2347X) : Flutter developer for the entire app.
+- [Shreyas Gaddam](https://devfolio.co/@shreydan) : UI and Assets design.
+
