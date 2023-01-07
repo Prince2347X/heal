@@ -27,7 +27,7 @@
 
 ### Hackathon & Team Information
 
-This project is currently a submission for [HackNITR 4.0](https://hacknitr.com) round 1 hosted on devfolio.
+This project is currently a submission for [HackNITR 4.0](https://hacknitr.com) round 1 hosted on [devfolio](https://devfolio.co/projects/heal-c43c).
 
 Team: `Cool Potatoes`
 
