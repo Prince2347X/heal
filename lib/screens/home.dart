@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:heal/screens/bmi.dart';
 import 'package:heal/screens/diet.dart';
 import 'package:heal/screens/exercises.dart';
 import 'package:heal/screens/meditation.dart';
-import 'package:heal/screens/bmi.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,70 +13,86 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Flexible(
-                flex: 3,
-                child: banner("assets/hello.png"),
-              ),
-              Flexible(
-                flex: 2,
-                child: Padding(
-                  padding:
-                  const EdgeInsets.symmetric(vertical: 22.0, horizontal: 14),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Text(
-                        "“${getQuote()}”",
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                            fontSize: 22, fontStyle: FontStyle.italic),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 6,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Wrap(
-                    alignment: WrapAlignment.spaceEvenly,
-                    runSpacing: 30,
-                    children: [
-                      featuresCard(context, const BMIScreen(), FontAwesome5.weight,
-                          "BMI", const Color(0xffa72bb5)),
-                      featuresCard(
-                          context,
-                          const ExerciseScreen(),
-                          FontAwesome5.dumbbell,
-                          "EXERCISE",
-                          const Color(0xfffa3754)),
-                      featuresCard(
-                          context,
-                          const MeditationScreen(),
-                          FontAwesome5.seedling,
-                          "MEDITATION",
-                          const Color(0xffff6f0f)),
-                      featuresCard(context, const DietScreen(), FontAwesome.food,
-                          "DIET", const Color(0xff0f9bff)),
-                    ],
-                  ),
-                ),
-              )
-            ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+            flex: 3,
+            child: banner(
+              "assets/hello.png",
+            ),
           ),
-        ));
+          Flexible(
+            flex: 2,
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 22.0, horizontal: 14),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Text(
+                    "“${getQuote()}”",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 22, fontStyle: FontStyle.italic),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Flexible(
+            flex: 6,
+            child: SizedBox(
+              width: double.infinity,
+              child: Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                runSpacing: 30,
+                children: [
+                  featuresCard(context, const BMIScreen(), FontAwesome5.weight,
+                      "BMI", const Color(0xffa72bb5)),
+                  featuresCard(
+                      context,
+                      const ExerciseScreen(),
+                      FontAwesome5.dumbbell,
+                      "EXERCISE",
+                      const Color(0xfffa3754)),
+                  featuresCard(
+                      context,
+                      const MeditationScreen(),
+                      FontAwesome5.seedling,
+                      "MEDITATION",
+                      const Color(0xffff6f0f)),
+                  featuresCard(context, const DietScreen(), FontAwesome.food,
+                      "DIET", const Color(0xff0f9bff)),
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    ));
   }
 }
 
-Widget banner(String path) {
-  return Container(
-    decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage(path), fit: BoxFit.cover)),
-  );
+Widget banner(String imagePath, {String title = ""}) {
+  return Stack(children: [
+    Material(
+      elevation: 18,
+      child: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage(imagePath),
+          fit: BoxFit.cover,
+        )),
+      ),
+    ),
+    AppBar(
+      title: Text(title),
+      leadingWidth: 28,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+    )
+  ]);
 }
 
 Widget featuresCard(

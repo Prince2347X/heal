@@ -12,9 +12,20 @@ class HealApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+          chipTheme: ChipThemeData(
+              labelStyle: const TextStyle(
+                fontSize: 14,
+                color: Colors.black
+              ),
+            side: BorderSide(color: Colors.grey.shade400, width: 2),
+            backgroundColor: Colors.transparent,
+
+          )
+      ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
