@@ -1,4 +1,4 @@
-class Exercises {
+class ExerciseObject {
   final String name;
   final String type;
   final String muscle;
@@ -7,7 +7,7 @@ class Exercises {
   final String instructions;
 
 
-  const Exercises({
+  const ExerciseObject({
     required this.name,
     required this.type,
     required this.muscle,
@@ -16,8 +16,8 @@ class Exercises {
     required this.instructions,
   });
 
-  factory Exercises.fromJson(Map<String, dynamic> json) {
-    return Exercises(
+  factory ExerciseObject.fromJson(Map<String, dynamic> json) {
+    return ExerciseObject(
       name: json['name'],
       type: json['type'],
       muscle: json['muscle'],

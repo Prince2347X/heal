@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:heal/screens/home.dart';
 import 'package:heal/models/exercises.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:heal/services/service_request.dart';
 
-import 'package:http/http.dart' as http;
-
+import 'package:heal/services/cache.dart' as cache;
 
 class ExerciseDetailsScreen extends StatefulWidget {
   final String exercise;
@@ -19,29 +17,25 @@ class ExerciseDetailsScreen extends StatefulWidget {
 }
 
 class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
-  List<Exercises> exercises = [];
+  List<ExerciseObject> exercises = [];
   var isLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    getData();
+    loadExercises();
   }
 
-  getData() async {
-    var client = http.Client();
-    var response = await client.get(Uri.parse(
-        "https://api.api-ninjas.com/v1/exercises?type=${widget.exercise}"),
-        headers: {"x-api-key": "ZYIZglG9v0UVFZggibFrSg==CbkjNU7ZGJtEQY7o"});
-    if (response.statusCode == 200) {
-      var listOfJsonObj = jsonDecode(response.body);
-      for (int i = 0; i < listOfJsonObj.length; i++) {
-        exercises.add(Exercises.fromJson(listOfJsonObj[i]));
-      }
-      setState(() {
-        isLoaded = true;
-      });
+  loadExercises() async {
+    if (cache.typeCache[widget.exercise] != null) {
+      exercises = cache.typeCache[widget.exercise] ?? [];
+    } else {
+      exercises = await getExercisesList(type: widget.exercise);
+      cache.typeCache[widget.exercise] = exercises;
     }
+    setState(() {
+      isLoaded = true;
+    });
   }
 
   @override
@@ -63,7 +57,8 @@ class _ExerciseDetailsScreenState extends State<ExerciseDetailsScreen> {
                     replacement: const Center(
                       child: CircularProgressIndicator(),
                     ),
-                    child: ListView.builder(
+                    child: exercises == [] ? errorScreen() :
+                    ListView.builder(
                       itemCount: exercises.length,
                       itemBuilder: (context, index) {
                         return Padding(
@@ -179,4 +174,10 @@ String equipmentString(String equipment) {
   }else {
     return "ℹ  Others";
   }
+}
+
+Widget errorScreen() {
+  return const Center(child:
+    Text("Something went wrong!")
+  );
 }
