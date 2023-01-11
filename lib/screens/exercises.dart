@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:heal/screens/exerciseDetails.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:heal/screens/exercises_by_type.dart';
+import 'package:heal/screens/exercises_by_muscle.dart';
 import 'package:heal/screens/home.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 PersistentTabController _controller = PersistentTabController(initialIndex: 0);
 
@@ -17,7 +17,8 @@ class ExerciseScreen extends StatefulWidget {
 class _ExerciseScreenState extends State<ExerciseScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       body: Column(
         children: [
           Flexible(
@@ -25,39 +26,87 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             child: banner("assets/exercises.png"),
           ),
           Flexible(
-            flex: 10,
-            child: PersistentTabView(
-              context,
-              controller: _controller,
-              screenTransitionAnimation: const ScreenTransitionAnimation(
-                curve: Curves.easeInCirc,
-                duration: Duration(seconds: 1)
-              ),
-              screens: [
-                listByType(context),
-                exerciseCard(context, "cardio")
-              ],
-              items: [
-                PersistentBottomNavBarItem(icon: const Icon(FontAwesome5.list_ul),
-                title: "Types",
-                  activeColorPrimary: const Color(0xfffa3754),
-                ),
-                PersistentBottomNavBarItem(icon: const ImageIcon(AssetImage("assets/muscle_icon.png"),size: 38),
-                title: "Muscles",
-                  activeColorPrimary: const Color(0xfffa3754),
-                )
-              ],
-            )
-          )
+              flex: 10,
+              child: PersistentTabView(
+                context,
+                controller: _controller,
+                screenTransitionAnimation: const ScreenTransitionAnimation(
+                    curve: Curves.easeInCirc, duration: Duration(seconds: 1)),
+                screens: [
+                  listByType(context),
+                  listByMuscle(context),
+                ],
+                items: [
+                  PersistentBottomNavBarItem(
+                    icon: const Icon(FontAwesome5.list_ul),
+                    title: "Types",
+                    activeColorPrimary: const Color(0xfffa3754),
+                  ),
+                  PersistentBottomNavBarItem(
+                    icon: const ImageIcon(AssetImage("assets/muscle_icon.png"),
+                        size: 38),
+                    title: "Muscles",
+                    activeColorPrimary: const Color(0xfffa3754),
+                  )
+                ],
+              ))
         ],
       ),
     ));
   }
 }
+
 Widget listByMuscle(BuildContext context) {
-  return Container(
-  );
+  List<String> muscleList = [
+    "abdominals",
+    "abductors",
+    "adductors",
+    "biceps",
+    "calves",
+    "chest",
+    "forearms",
+    "glutes",
+    "hamstrings",
+    "lats",
+    "lower_back",
+    "middle_back",
+    "neck",
+    "quadriceps",
+    "traps",
+    "triceps"
+  ];
+  return ListView.builder(
+    itemCount: muscleList.length,
+      itemBuilder: (context, index) {
+    return muscleCard(context, muscleList[index], index);
+  });
 }
+
+Widget muscleCard(BuildContext context, String muscle, int index) {
+  return InkWell(
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  ExerciseDetailsByMuscleScreen(muscle: muscle))),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0, right: 8, left: 8),
+        child: Card(
+          elevation: 12,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.06,
+            child: Center(
+              // padding:
+              //     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
+              child: Text("${index+1}. ${muscle.replaceAll("_", " ").toCapitalized()}",
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ),
+      ));
+}
+
 ListView listByType(BuildContext context) {
   return ListView(children: [
     exerciseCard(context, "cardio"),
@@ -72,7 +121,6 @@ ListView listByType(BuildContext context) {
   ]);
 }
 
-
 Widget exerciseCard(BuildContext context, String exercise) {
   return Padding(
     padding: const EdgeInsets.only(top: 16.0, left: 8, right: 8),
@@ -80,7 +128,8 @@ Widget exerciseCard(BuildContext context, String exercise) {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ExerciseDetailsScreen(exercise: exercise))),
+              builder: (context) =>
+                  ExerciseDetailsByTypeScreen(exercise: exercise))),
       child: Card(
         elevation: 20,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -93,13 +142,6 @@ Widget exerciseCard(BuildContext context, String exercise) {
                   fit: BoxFit.cover,
                   alignment: Alignment.bottomCenter)),
         ),
-        // child: Container(
-        //   height: MediaQuery.of(context).size.height * 0.2,
-        //   child: ClipRRect(
-        //     borderRadius: BorderRadius.circular(14),
-        //     child: Image.asset("assets/exercises/$exercise.png"),
-        //   ),
-        // )
       ),
     ),
   );

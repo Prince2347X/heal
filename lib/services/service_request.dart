@@ -12,7 +12,7 @@ Future<List<ExerciseObject>> getExercisesList(
     value = type;
   } else {
     toRequest = "muscle";
-    value = type;
+    value = muscle;
   }
   Map<String, String> header = {
     "x-api-key": "ZYIZglG9v0UVFZggibFrSg==CbkjNU7ZGJtEQY7o"
