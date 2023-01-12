@@ -9,9 +9,9 @@ class NutritionObject {
   final double fiber;
   final double sugar;
 
-  final double sodium; //in mg
-  final double potassium; //in mg
-  final double cholesterol; //in mg
+  final int sodium; //in mg
+  final int potassium; //in mg
+  final int cholesterol; //in mg
 
   const NutritionObject({
     required this.name,

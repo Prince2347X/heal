@@ -29,7 +29,7 @@ class _ExerciseDetailsByTypeScreenState extends State<ExerciseDetailsByTypeScree
     if (cache.typeCache[widget.exercise] != null) {
       exercises = cache.typeCache[widget.exercise] ?? [];
     } else {
-      exercises = await getExercisesList(type: widget.exercise);
+      exercises = await fetchExercisesList(type: widget.exercise);
       cache.typeCache[widget.exercise] = exercises;
     }
     setState(() {

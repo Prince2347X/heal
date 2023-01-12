@@ -32,7 +32,7 @@ class _ExerciseDetailsByMuscleScreenState
     if (cache.muscleCache[widget.muscle] != null) {
       exercises = cache.muscleCache[widget.muscle] ?? [];
     } else {
-      exercises = await getExercisesList(muscle: widget.muscle);
+      exercises = await fetchExercisesList(muscle: widget.muscle);
       cache.muscleCache[widget.muscle] = exercises;
     }
     setState(() {
