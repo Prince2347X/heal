@@ -109,7 +109,7 @@ Widget displayExercise(BuildContext context, name, type, muscle, equipment,
                         softWrap: true,
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xfffa3754),
+                            color: Color(0xff0f9bff),
                             fontSize: 24),
                       ),
                     ),

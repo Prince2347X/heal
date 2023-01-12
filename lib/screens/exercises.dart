@@ -40,13 +40,13 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   PersistentBottomNavBarItem(
                     icon: const Icon(FontAwesome5.list_ul),
                     title: "Types",
-                    activeColorPrimary: const Color(0xfffa3754),
+                    activeColorPrimary: const Color(0xff0f9bff),
                   ),
                   PersistentBottomNavBarItem(
                     icon: const ImageIcon(AssetImage("assets/muscle_icon.png"),
                         size: 38),
                     title: "Muscles",
-                    activeColorPrimary: const Color(0xfffa3754),
+                    activeColorPrimary: const Color(0xff0f9bff),
                   )
                 ],
               ))
