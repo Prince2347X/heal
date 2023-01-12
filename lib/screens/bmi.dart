@@ -45,8 +45,8 @@ class _BMIScreenState extends State<BMIScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              input(context, "Height (in cm)", height),
-                              input(context, "Weight (in Kg)", weight),
+                              intInput(context, "Height (in cm)", height),
+                              intInput(context, "Weight (in Kg)", weight),
                             ],
                           ),
                           SizedBox(
@@ -95,7 +95,7 @@ class _BMIScreenState extends State<BMIScreen> {
                           ),
                         ],
                       )),
-                  show ? bmiWidget(context, int.parse(height.text), int.parse(weight.text)) : Container()
+                  show ? bmiInfo(context, int.parse(height.text), int.parse(weight.text)) : Container()
                 ]
             )
         )
@@ -134,7 +134,7 @@ double getBmi(String height, String weight) {
   return w/((h/100)*(h/100));
 }
 
-Widget bmiWidget(BuildContext context, int height, int weight) {
+Widget bmiInfo(BuildContext context, int height, int weight) {
 
   double bmi = weight/((height/100)*(height/100));
 
@@ -162,7 +162,7 @@ Widget bmiWidget(BuildContext context, int height, int weight) {
   );
 }
 
-Widget input(BuildContext context, String text, TextEditingController controller) {
+Widget intInput(BuildContext context, String text, TextEditingController controller) {
   return SizedBox(
     width: MediaQuery.of(context).size.width * 0.4,
     height: MediaQuery.of(context).size.height * 0.08,

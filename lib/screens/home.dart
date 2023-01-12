@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:heal/screens/bmi.dart';
-import 'package:heal/screens/diet.dart';
+import 'package:heal/screens/nutrition.dart';
 import 'package:heal/screens/exercises.dart';
 import 'package:heal/screens/meditation.dart';
 
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                       const ExerciseScreen(),
                       FontAwesome5.dumbbell,
                       "EXERCISE",
-                      const Color(0xfffa3754)),
+                      const Color(0xff0f9bff)),
                   featuresCard(
                       context,
                       const MeditationScreen(),
@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                       "MEDITATION",
                       const Color(0xffff6f0f)),
                   featuresCard(context, const DietScreen(), FontAwesome.food,
-                      "DIET", const Color(0xff0f9bff)),
+                      "DIET", const Color(0xfffa3754)),
                 ],
               ),
             ),
