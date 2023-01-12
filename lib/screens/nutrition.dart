@@ -12,16 +12,25 @@ class DietScreen extends StatefulWidget {
 
 class _DietScreenState extends State<DietScreen> {
   bool show = false;
+  bool empty = true;
   TextEditingController foodInput = TextEditingController();
+
+//TODO: Define the function to fetch data from API
+  search(String foodItem) {
+    setState(() {
+      show = true;
+    });
+    print(foodItem);
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(children: [
-          Flexible(flex: 2, child: banner("assets/nutrition.png")),
+          Flexible(flex: 3, child: banner("assets/nutrition.png")),
           const Flexible(
-            flex: 1,
+            flex: 2,
             child: Padding(
               padding: EdgeInsets.only(top: 18.0, bottom: 12),
               child: Text(
@@ -32,94 +41,77 @@ class _DietScreenState extends State<DietScreen> {
             ),
           ),
           Flexible(
-            flex: 5,
-            child: Column(
-
-              children: [
-                strInput(context, "Search any food item", foodInput),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.04,
-                ),
-                Center(
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.055,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          show = true;
-                        });
-                      },
-                      style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(20),
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xffFC3E66)),
-                      ),
-                      child: const Text("Calculate"),
+            flex: 3,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.08,
+              child: Card(
+                elevation: 20,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                color: Colors.white,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.69,
+                          child: TextField(
+                            onChanged: (value) {
+                              if (value.isNotEmpty) {
+                                setState(() {
+                                  empty = false;
+                                });
+                              } else {
+                                setState(() {
+                                  empty = true;
+                                  show = false;
+                                });
+                              }
+                            },
+                            onSubmitted: (foodItem) {
+                              search(foodItem);
+                            },
+                            textInputAction: TextInputAction.search,
+                            controller: foodInput,
+                            cursorColor: const Color(0xffFC3E66),
+                            cursorWidth: 2,
+                            cursorHeight: 18,
+                            decoration: const InputDecoration(
+                                border: InputBorder.none, enabled: true, hintText: "Search any food item..."),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: empty ? null : () {
+                            search(foodInput.text);
+                          },
+                          icon: const Icon(
+                            Icons.search,
+                            color: Color(0xffFC3E66),
+                          ),
+                          splashRadius: 20,
+                        )
+                      ],
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
+            // child: strInput(context, "Search any food item", foodInput, search),
           ),
-          show ? nutritionInfo(context) : Container()
+          const Spacer(flex: 1),
+          show ? nutritionInfo(context, foodItem: foodInput.text) : Container()
         ]),
       ),
     );
   }
 }
 
-Widget strInput(
-    BuildContext context, String hint, TextEditingController controller) {
+Widget nutritionInfo(BuildContext context, {NutritionObject? nutritionInfo, String? foodItem}) {
+  final String? food = foodItem;
   return SizedBox(
     width: MediaQuery.of(context).size.width * 0.9,
-    height: MediaQuery.of(context).size.height * 0.08,
-    child: Card(
-      elevation: 20,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-      color: Colors.white,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.69,
-                child: TextField(
-                  onSubmitted: (foodItem) {
-                    search(foodItem);
-                  },
-                  textInputAction: TextInputAction.search,
-                  controller: controller,
-                  cursorColor: const Color(0xffFC3E66),
-                  cursorWidth: 2,
-                  cursorHeight: 20,
-                  decoration: InputDecoration(
-                      border: InputBorder.none, enabled: true, hintText: hint),
-                ),
-              ),
-              IconButton(
-                onPressed: () {
-                  search(controller.text);
-                },
-                icon: const Icon(
-                  Icons.search,
-                  color: Color(0xffFC3E66),
-                ),
-                splashRadius: 20,
-              )
-            ],
-          ),
-        ),
-      ),
-    ),
-  );
-}
-
-Widget nutritionInfo(BuildContext context, {NutritionObject? nutritionInfo}) {
-  return SizedBox(
-    width: MediaQuery.of(context).size.width * 0.9,
-    height: MediaQuery.of(context).size.height * 0.4,
+    height: MediaQuery.of(context).size.height * 0.3,
     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12),
       child: Card(
@@ -131,16 +123,12 @@ Widget nutritionInfo(BuildContext context, {NutritionObject? nutritionInfo}) {
         color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [
-            Text("Food Item", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, decoration: TextDecoration.underline),),
-            Text("Hmm", style: TextStyle(fontSize: 56, color: Color(0xffa72bb5), fontWeight: FontWeight.bold),),
+          children: [
+            const Text("Food Item", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, decoration: TextDecoration.underline),),
+            Text(food ?? "None", style: TextStyle(fontSize: 56, color: Color(0xffa72bb5), fontWeight: FontWeight.bold),),
           ],),
       ),
     ),
   );
 }
 
-//TODO: Define the function to fetch data from API
-search(String foodItem) {
-  print(foodItem);
-}
